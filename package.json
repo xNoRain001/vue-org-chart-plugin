@@ -1,0 +1,28 @@
+{
+  "name": "vue-org-chart-plugin",
+  "version": "1.0.0",
+  "description": "Drawing org chart based on echarts",
+  "keywords": [
+    "vue-org-chart-plugin",
+    "vue-org-chart",
+    "org-chart",
+    "echarts"
+  ],
+  "author": "xNoRain001",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/xNoRain001/vue-org-chart-plugin.git"
+  },
+  "main": "dist/vue-org-chart-plugin.js",
+  "scripts": {
+    "build": "rollup -c -w"
+  },
+  "license": "ISC",
+  "dependencies": {
+    "echarts": "^5.3.2",
+    "rollup": "^2.72.0"
+  },
+  "devDependencies": {
+    "rollup-plugin-babel": "^4.4.0"
+  }
+}
