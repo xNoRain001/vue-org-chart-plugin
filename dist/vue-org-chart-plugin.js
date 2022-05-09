@@ -116,7 +116,7 @@ var getDepth = function getDepth(children) {
 };
 
 var getHeight = function getHeight(vm) {
-  vm.$el.style.height = vm.depth * 110 + 120 + 'px';
+  vm.$el.style.height = vm.depth * 140 + 140 + 'px';
 };
 
 var mountedFn = function mountedFn() {
