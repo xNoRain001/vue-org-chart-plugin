@@ -6,17 +6,17 @@ import getHeight from './getHeight'
 
 const mountedFn = function () {
   const vm = this
-  const { option, defaultOption } = vm
+  const { options, defaultOptions } = vm
   
-  formateRoot(option, vm)
-  formateNode(defaultOption.series[0].data[0], option.children)
-  vm.depth += getDepth(defaultOption.series[0].data[0].children)
+  formateRoot(options, vm)
+  formateNode(defaultOptions.series[0].data[0], options.children)
+  vm.depth += getDepth(defaultOptions.series[0].data[0].children)
   getHeight(vm)
   
   const myChart = echarts.init(vm.$el)
-  myChart.setOption(defaultOption)
+  myChart.setOption(defaultOptions)
 
-  if (option.config && option.config.autoresize) {
+  if (options.config && options.config.autoresize) {
     window.addEventListener('resize', myChart.resize)
   }
 }

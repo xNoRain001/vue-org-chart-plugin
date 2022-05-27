@@ -8,7 +8,9 @@
 export default {
 	data () {
     return {
+      // https://echarts.apache.org/zh/option.html#series-tree.data
       orgChartOption: {
+        // 节点的值，在 tooltip 中显示。
         value: {
           Position: ' CEO',
           Email: ' mock@gmail.com'

@@ -1,8 +1,8 @@
 import createNode from './createNode'
 
-const formateRoot =function (option, vm) {
-  const root = createNode(option)
-  vm.defaultOption.series[0].data.push(root)
+const formateRoot = function (options, vm) {
+  const root = createNode(options)
+  vm.defaultOptions.series[0].data.push(root)
   vm.depth++
 }
 

@@ -3,7 +3,7 @@ import { CanvasRenderer } from 'echarts/renderers'
 import { TreeChart } from 'echarts/charts'
 import { GridComponent, TooltipComponent } from 'echarts/components'
 
-import defaultData from './defaultData'
+import defaultData from './default/data'
 import mountedFn from './mountedFn'
 
 use([
@@ -19,10 +19,13 @@ const init = function (Vue, app, h) {
   if (version[0] === '2') {
     Vue.component('v-org-chart', Vue.extend({
       render: h => h('div'),
-      props: ['option'],
+
+      props: ['options'],
+
       data () {
         return defaultData
       },
+
       mounted: mountedFn
     }))
   } else {
@@ -30,10 +33,13 @@ const init = function (Vue, app, h) {
       render () {
         return h('div')
       },
-      props: ['option'],
+
+      props: ['options'],
+
       data () {
         return defaultData
       },
+      
       mounted: mountedFn
     })
   }
