@@ -3,7 +3,7 @@ import { CanvasRenderer } from 'echarts/renderers'
 import { TreeChart } from 'echarts/charts'
 import { GridComponent, TooltipComponent } from 'echarts/components'
 
-import defaultData from './default/data'
+import defaultData from '../default/index'
 import mountedFn from './mountedFn'
 
 use([

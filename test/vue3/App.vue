@@ -10,16 +10,27 @@ export default {
     return {
       // https://echarts.apache.org/zh/option.html#series-tree.data
       orgChartOption: {
-        // 节点的值，在 tooltip 中显示。
-        value: {
-          Position: ' CEO',
-          Email: ' mock@gmail.com'
+        tooltip: {
+          // 节点的值，在 tooltip 中显示。
+          value: {
+            Position: 'CEO',
+            Email: 'mock@gmail.com'
+          },
+          style: {
+            
+          }
         },
-        avatarStyle: {
-          image: 'http://127.0.0.1:8080/assets/avatar/avatar001.png',
+        avatar: {
+          value: 'http://127.0.0.1:8080/assets/avatar/avatar001.png',
+          style: {
+
+          }
         },
-        textStyle: {
-          text: 'Tayler',
+        text: {
+          value: 'Tayler',
+          style: {
+            
+          }
         },
         children: [
           {

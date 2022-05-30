@@ -18,7 +18,7 @@ const series = [
 
     // 树图初始展开的层级（深度）。根节点是第 0 层，然后是第 1 层、第 2 层，... ，直到叶子节点。
     // 如果设置为 -1 或者 null 或者 undefined，所有节点都将展开。
-    initialTreeDepth: 2, // 初始化时展开层数
+    initialTreeDepth: 5, // 初始化时展开层数
 
     // 定义树图边的样式。
     lineStyle: {

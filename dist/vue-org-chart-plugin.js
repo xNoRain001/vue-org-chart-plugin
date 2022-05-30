@@ -4,8 +4,6 @@ import { TreeChart } from 'echarts/charts';
 import { GridComponent, TooltipComponent } from 'echarts/components';
 import * as echarts from 'echarts';
 
-var depth = 0;
-
 // https://echarts.apache.org/zh/option.html#tooltip
 var tooltip = {
   // 是否显示提示框
@@ -117,7 +115,7 @@ var series = [{
   // false
   // 树图初始展开的层级（深度）。根节点是第 0 层，然后是第 1 层、第 2 层，... ，直到叶子节点。
   // 如果设置为 -1 或者 null 或者 undefined，所有节点都将展开。
-  initialTreeDepth: 2,
+  initialTreeDepth: 5,
   // 初始化时展开层数
   // 定义树图边的样式。
   lineStyle: {
@@ -129,111 +127,157 @@ var series = [{
   data: []
 }];
 
-var config = {
+var api = {
   autoresize: false
 };
 
 var options = {
-  config: config,
   tooltip: tooltip,
-  series: series
+  series: series,
+  api: api
 };
 
-var defaultData = {
-  defaultOptions: options,
-  depth: depth
+var data = {
+  defaultOptions: options
 };
 
-var createNode = function createNode(options) {
-  var tooltip = options.tooltip,
-      avatarStyle = options.avatarStyle,
-      textStyle = options.textStyle;
+var createNode = function createNode(vm, parent, options) {
+  if (parent == null) {
+    // create root
+    var root = _createNode(options);
+
+    vm.defaultOptions.series[0].data.push(root);
+    createNode(vm, root, options.children || []);
+  } else {
+    // create node
+    for (var i = 0, l = options.length; i < l; i++) {
+      var childOptions = options[i];
+
+      var node = _createNode(childOptions);
+
+      parent.children.push(node);
+      createNode(vm, node, childOptions.children || []);
+    }
+  }
+};
+
+var _createNode = function _createNode(options) {
+  var _tooltipStyle$textSty, _tooltipStyle$textSty2, _tooltipStyle$textSty3, _tooltipStyle$textSty4, _tooltipStyle$textSty5, _tooltipStyle$textSty6, _tooltipStyle$textSty7;
+
+  var _ref = options.tooltip || {},
+      tooltipValue = _ref.value,
+      _ref$style = _ref.style,
+      tooltipStyle = _ref$style === void 0 ? {} : _ref$style;
+
+  var _ref2 = options.avatar || {},
+      avatarValue = _ref2.value,
+      _ref2$style = _ref2.style,
+      avatarStyle = _ref2$style === void 0 ? {} : _ref2$style;
+
+  var _options$text = options.text,
+      textValue = _options$text.value,
+      _options$text$style = _options$text.style,
+      textStyle = _options$text$style === void 0 ? {} : _options$text$style;
   var listOfColors = ['#5470c6', '#91cc75', '#fac858', '#ee6666', '#73c0de', '#3ba272', '#fc8452', '#9a60b4', '#ea7ccc'];
   var node = {
-    value: tooltip === null || tooltip === void 0 ? void 0 : tooltip.value,
+    value: tooltipValue,
+    // https://echarts.apache.org/zh/option.html#series-tree.label
     label: {
-      formatter: ["{avatar|}", "{text|".concat(textStyle.text, "}")].join("\n"),
+      formatter: ["{avatar|}", "{text|".concat(textValue, "}")].join("\n"),
       align: "center",
       verticalAlign: "middle",
       rich: {
         avatar: {
-          // if don't set image, set background color as image
-          backgroundColor: avatarStyle.image ? {
-            image: avatarStyle.image
+          // if haven't set image, set background color as image
+          backgroundColor: avatarValue ? {
+            image: avatarValue
           } : listOfColors[Math.floor(Math.random() * 9)],
-          height: 60,
-          width: 60,
-          borderRadius: 50
+          height: avatarStyle.height || 60,
+          width: avatarStyle.width || 60,
+          borderRadius: avatarStyle.borderRadius || 50
         },
         text: {
-          color: '#333',
+          color: textStyle.color || '#333',
           // 文字字体的粗细。
-          fontWeight: 'normal',
+          fontWeight: textStyle.fontWeight || 'normal',
           // bold bolder lighter
           // 文字的字体大小。
-          fontSize: 12,
+          fontSize: textStyle.fontSize || 12,
           // 文字水平对齐方式，默认自动。如果没有设置 align，则会取父层级的 align
           // align: 'center', // left right
           // verticalAlign
           // verticalAlign: 'middle' // top bottom
           // 文字块背景色。
-          backgroundColor: '#fff',
+          backgroundColor: textStyle.backgroundColor || '#fff',
           // transparent
-          // 文字块边框颜色。
-          borderColor: 'inherit',
-          // 文字块边框描边类型。
-          borderType: 'solid',
-          // dashed dotted
-          // 文字块的圆角。
-          // borderRadius: 50,
-          // 文字块的内边距
-          // padding: 5,
-          // padding: [3, 4, 5, 6]：表示 [上, 右, 下, 左] 的边距。
-          // padding: 4：表示 padding: [4, 4, 4, 4]。
-          // padding: [3, 4]：表示 padding: [3, 4, 3, 4]。
           // 文字块的宽度。一般不用指定，不指定则自动是文字的宽度。
           // width: 100,
           // 文字块的高度。一般不用指定，不指定则自动是文字的高度。
-          height: 30
+          height: 20
         }
       }
     },
-    // tooltip: {
-    //   textStyle: {
-    //     // position
-    //     // backgroundColor
-    //     // borderColor
-    //     // borderWidth
-    //     // padding
-    //     textStyle: {
-    //       // color
-    //       // fontWeight
-    //       // fontSize
-    //       // width
-    //       // height
-    //       // overflow
-    //       // ellipsis
-    //     }
-    //   }
-    // },
+    // https://echarts.apache.org/zh/option.html#series-tree.tooltip
+    tooltip: {
+      position: tooltipStyle.position || null,
+      backgroundColor: tooltipStyle.backgroundColor || null,
+      borderColor: tooltipStyle.borderColor || null,
+      borderWidth: tooltipStyle.borderWidth || null,
+      padding: tooltipStyle.padding || null,
+      textStyle: {
+        color: (_tooltipStyle$textSty = tooltipStyle.textStyle) === null || _tooltipStyle$textSty === void 0 ? void 0 : _tooltipStyle$textSty.color,
+        fontWeight: (_tooltipStyle$textSty2 = tooltipStyle.textStyle) === null || _tooltipStyle$textSty2 === void 0 ? void 0 : _tooltipStyle$textSty2.fontWeight,
+        fontSize: (_tooltipStyle$textSty3 = tooltipStyle.textStyle) === null || _tooltipStyle$textSty3 === void 0 ? void 0 : _tooltipStyle$textSty3.fontSize,
+        width: (_tooltipStyle$textSty4 = tooltipStyle.textStyle) === null || _tooltipStyle$textSty4 === void 0 ? void 0 : _tooltipStyle$textSty4.width,
+        height: (_tooltipStyle$textSty5 = tooltipStyle.textStyle) === null || _tooltipStyle$textSty5 === void 0 ? void 0 : _tooltipStyle$textSty5.height,
+        overflow: (_tooltipStyle$textSty6 = tooltipStyle.textStyle) === null || _tooltipStyle$textSty6 === void 0 ? void 0 : _tooltipStyle$textSty6.overflow,
+        ellipsis: (_tooltipStyle$textSty7 = tooltipStyle.textStyle) === null || _tooltipStyle$textSty7 === void 0 ? void 0 : _tooltipStyle$textSty7.ellipsis
+      }
+    },
     children: []
   };
   return node;
 };
 
-var formateNode = function formateNode(parent, children) {
-  for (var i = 0, l = children.length; i < l; i++) {
-    var child = children[i];
-    var node = createNode(child);
-    parent.children.push(node);
-    formateNode(node, child.children);
+function _typeof(obj) {
+  "@babel/helpers - typeof";
+
+  return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) {
+    return typeof obj;
+  } : function (obj) {
+    return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
+  }, _typeof(obj);
+}
+
+var getType = function getType(v) {
+  if (v == null) {
+    return "".concat(v);
   }
+
+  var type = _typeof(v);
+
+  return !/^(object|function)$/.test(type) ? type : Object.prototype.toString.call(v).slice(8, -1).toLowerCase();
 };
 
-var formateRoot = function formateRoot(options, vm) {
-  var root = createNode(options);
-  vm.defaultOptions.series[0].data.push(root);
-  vm.depth++;
+var merge = function merge(defaultOptions, options) {
+  var keys = Object.keys(options);
+
+  for (var i = 0, l = keys.length; i < l; i++) {
+    var key = keys[i];
+    var oldVal = defaultOptions[key];
+    var newVal = options[key];
+
+    if (oldVal && oldVal !== newVal) {
+      // nested object
+      if (getType(oldVal) === 'object' && getType(newVal === 'object')) {
+        merge(oldVal, newVal);
+      } else {
+        defaultOptions[key] = newVal;
+      }
+    }
+  }
+
+  return defaultOptions;
 };
 
 var getDepth = function getDepth(children) {
@@ -250,22 +294,35 @@ var getDepth = function getDepth(children) {
   return depth + 1;
 };
 
-var getHeight = function getHeight(vm) {
-  vm.$el.style.height = vm.depth * 140 + 140 + 'px';
+var setHeight = function setHeight(tree, depth) {
+  tree.style.height = 180 * (depth + 1) + 'px';
 };
 
 var mountedFn = function mountedFn() {
   var vm = this;
-  var options = vm.options,
-      defaultOptions = vm.defaultOptions;
-  formateRoot(options, vm);
-  formateNode(defaultOptions.series[0].data[0], options.children);
-  vm.depth += getDepth(defaultOptions.series[0].data[0].children);
-  getHeight(vm);
-  var myChart = echarts.init(vm.$el);
-  myChart.setOption(defaultOptions);
+  var defaultOptions = vm.defaultOptions,
+      options = vm.options; // merge options to default options
 
-  if (options.config && options.config.autoresize) {
+  if (options.globalStyle) {
+    merge(defaultOptions, options.globalStyle);
+  } // create tree
+
+
+  createNode(vm, undefined, options); // get tree depth
+
+  var depth = getDepth(defaultOptions.series[0].data[0].children || []); // set tree height
+
+  setHeight(vm.$el, depth); // fix org chart's position
+
+  if (depth === 0) {
+    defaultOptions.series[0].top = '50%';
+  } // render org chart
+
+
+  var myChart = echarts.init(vm.$el);
+  myChart.setOption(defaultOptions); // autoresize when screen width change
+
+  if (defaultOptions.api.autoresize) {
     window.addEventListener('resize', myChart.resize);
   }
 };
@@ -281,8 +338,8 @@ var init = function init(Vue, app, h) {
         return h('div');
       },
       props: ['options'],
-      data: function data() {
-        return defaultData;
+      data: function data$1() {
+        return data;
       },
       mounted: mountedFn
     }));
@@ -292,8 +349,8 @@ var init = function init(Vue, app, h) {
         return h('div');
       },
       props: ['options'],
-      data: function data() {
-        return defaultData;
+      data: function data$1() {
+        return data;
       },
       mounted: mountedFn
     });

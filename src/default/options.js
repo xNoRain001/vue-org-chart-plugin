@@ -1,11 +1,12 @@
 import tooltip from "./tooltip"
 import series from "./series"
-import config from "./config"
+import api from "./api"
 
+// default options
 const options = {
-  config,
   tooltip,
-  series
+  series,
+  api
 }
 
 export default options
