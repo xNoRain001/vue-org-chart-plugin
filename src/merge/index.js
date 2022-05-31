@@ -11,7 +11,10 @@ const merge = function (defaultOptions, options) {
     if (oldVal && oldVal !== newVal) {
       
       // nested object
-      if (getType(oldVal) === 'object' && getType(newVal === 'object')) {
+      if (
+        (getType(oldVal) === 'object' && getType(newVal === 'object')) ||
+        (getType(oldVal) === 'array' && getType(newVal === 'array'))
+      ) {
         merge(oldVal, newVal)
       } else {
         defaultOptions[key] = newVal

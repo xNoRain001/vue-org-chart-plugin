@@ -180,6 +180,7 @@ var _createNode = function _createNode(options) {
       textStyle = _options$text$style === void 0 ? {} : _options$text$style;
   var listOfColors = ['#5470c6', '#91cc75', '#fac858', '#ee6666', '#73c0de', '#3ba272', '#fc8452', '#9a60b4', '#ea7ccc'];
   var node = {
+    // 节点的值，在 tooltip 中显示。
     value: tooltipValue,
     // https://echarts.apache.org/zh/option.html#series-tree.label
     label: {
@@ -197,6 +198,7 @@ var _createNode = function _createNode(options) {
           borderRadius: avatarStyle.borderRadius || 50
         },
         text: {
+          // 文字字体的颜色。
           color: textStyle.color || '#333',
           // 文字字体的粗细。
           fontWeight: textStyle.fontWeight || 'normal',
@@ -269,7 +271,7 @@ var merge = function merge(defaultOptions, options) {
 
     if (oldVal && oldVal !== newVal) {
       // nested object
-      if (getType(oldVal) === 'object' && getType(newVal === 'object')) {
+      if (getType(oldVal) === 'object' && getType(newVal === 'object') || getType(oldVal) === 'array' && getType(newVal === 'array')) {
         merge(oldVal, newVal);
       } else {
         defaultOptions[key] = newVal;

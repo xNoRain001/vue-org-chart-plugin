@@ -33,13 +33,18 @@ const _createNode = function (options) {
     '#ea7ccc'
   ]
   const node = {
+
+    // 节点的值，在 tooltip 中显示。
     value: tooltipValue,
 
     // https://echarts.apache.org/zh/option.html#series-tree.label
     label: {
       formatter: ["{avatar|}", `{text|${ textValue }}`].join("\n"),
+
       align: "center",
+
       verticalAlign: "middle",
+
       rich: {
         avatar: {
 
@@ -49,24 +54,34 @@ const _createNode = function (options) {
                 image: avatarValue,
               }
             : listOfColors[Math.floor(Math.random() * 9)],
+
           height: avatarStyle.height || 60,
+
           width: avatarStyle.width || 60,
+
           borderRadius: avatarStyle.borderRadius || 50,
         },
         text: {
+          // 文字字体的颜色。
           color: textStyle.color || '#333',
+
           // 文字字体的粗细。
           fontWeight: textStyle.fontWeight || 'normal', // bold bolder lighter
+
           // 文字的字体大小。
           fontSize: textStyle.fontSize || 12,
+
           // 文字水平对齐方式，默认自动。如果没有设置 align，则会取父层级的 align
           // align: 'center', // left right
           // verticalAlign
           // verticalAlign: 'middle' // top bottom
+
           // 文字块背景色。
           backgroundColor: textStyle.backgroundColor || '#fff', // transparent
+          
           // 文字块的宽度。一般不用指定，不指定则自动是文字的宽度。
           // width: 100,
+          
           // 文字块的高度。一般不用指定，不指定则自动是文字的高度。
           height: 20,
         },
@@ -76,20 +91,32 @@ const _createNode = function (options) {
     // https://echarts.apache.org/zh/option.html#series-tree.tooltip
     tooltip: {
       position: tooltipStyle.position || null,
+
       backgroundColor: tooltipStyle.backgroundColor || null,
+
       borderColor: tooltipStyle.borderColor || null,
+
       borderWidth: tooltipStyle.borderWidth || null,
+
       padding: tooltipStyle.padding || null,
+
       textStyle: {
         color: tooltipStyle.textStyle?.color,
+
         fontWeight: tooltipStyle.textStyle?.fontWeight,
+
         fontSize: tooltipStyle.textStyle?.fontSize,
+
         width: tooltipStyle.textStyle?.width,
+
         height: tooltipStyle.textStyle?.height,
+
         overflow: tooltipStyle.textStyle?.overflow,
+
         ellipsis: tooltipStyle.textStyle?.ellipsis
       }
     },
+    
     children: []
   }
 

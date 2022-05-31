@@ -1,6 +1,6 @@
 {
   "name": "vue-org-chart-plugin",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Drawing org chart based on echarts",
   "keywords": [
     "vue-org-chart-plugin",
@@ -8,7 +8,7 @@
     "org-chart",
     "echarts"
   ],
-  "author": "xNoRain001",
+  "author": "Zhang Meixue",
   "repository": {
     "type": "git",
     "url": "git://github.com/xNoRain001/vue-org-chart-plugin.git"
