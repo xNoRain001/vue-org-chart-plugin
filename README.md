@@ -31,48 +31,48 @@ new Vue({
 
 <script>
 export default {
-	data () {
+  name: "App",
+
+  data() {
     return {
-      orgChartOption: {
-        // 配置
-        config: {
-          autoresize: true // 自适应
+      orgChartOptions: {
+        tooltip: {
+
+          // 节点的值，在 tooltip 中显示。
+          value: {
+            Position: 'mock',
+            Email: 'mock@mock.com'
+          },
         },
 
-        // 鼠标悬浮显示内容
-        value: {
-          Position: ' CEO',
-          Email: ' mock@gmail.com'
+        avatar: {
+
+          // 头像
+          value: 'http://127.0.0.1:8080/assets/avatar/avatar001.png',
         },
-        
-        // 头像
-        avatarStyle: {
-          image: 'http://127.0.0.1:8080/assets/avatar/avatar001.png',
+
+        text: {
+
+          // 文本
+          value: 'Tayler',
         },
-        
-        // 文本
-        textStyle: {
-          text: 'Tayler',
-        },
-        
-        // 子节点
+
         children: [
           {
-            value: {},
-            avatarStyle: {
-              image: 'http://127.0.0.1:8080/assets/avatar/avatar002.png',
+            avatar: {
+              value: 'http://127.0.0.1:8080/assets/avatar/avatar003.png',
             },
-            textStyle: {
-              text: 'Brande',
+            text: {
+              value: 'Brande',
             },
-            children: [ /*...*/ ]
-          }
+            children: [ /* ... */ ]
+          },
           // ...
         ]
       }
-    }
-  }
-}
+    };
+  },
+};
 </script>
 ```
 
@@ -89,13 +89,13 @@ app.use(orgChart, app, h)
 app.mount('#app')
 
 // Foo.vue
-<v-org-chart :option='orgChartOption'></v-org-chart>
+<v-org-chart :options='orgChartOptions'></v-org-chart>
 
 <script>
 export default {
 	data () {
     return {
-      orgChartOption: {
+      orgChartOptions: {
         // ...
       } 
     }
