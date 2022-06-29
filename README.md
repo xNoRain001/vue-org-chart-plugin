@@ -12,8 +12,8 @@ npm i vue-org-chart-plugin echarts@5.3.2
 
 ### Vue 2.x
 
-```html
 // main.js
+```javascript
 import Vue from 'vue'
 import App from './App.vue'
 import orgChart from 'vue-org-chart-plugin'
@@ -25,8 +25,10 @@ Vue.config.productionTip = false
 new Vue({
   render: h => h(App),
 }).$mount('#app')
+```
 
 // Foo.vue
+```html
 <v-org-chart :options='orgChartOptions'></v-org-chart>
 
 <script>
@@ -78,8 +80,8 @@ export default {
 
 ### Vue 3.x
 
-```html
 // main.js
+```javascript
 import { createApp, h } from 'vue'
 import App from './App.vue'
 import orgChart from 'vue-org-chart-plugin'
@@ -87,8 +89,9 @@ import orgChart from 'vue-org-chart-plugin'
 const app = createApp(App)
 app.use(orgChart, app, h)
 app.mount('#app')
-
+```
 // Foo.vue
+```html
 <v-org-chart :options='orgChartOptions'></v-org-chart>
 
 <script>
@@ -306,7 +309,7 @@ avatar: {
 }
 ```
 
-## text
+### text
 
 ```javascript
 text: {
