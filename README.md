@@ -1,4 +1,6 @@
-## 效果图
+## 介绍
+
+绘制组织关系图的插件。
 
 ![](assets/imgs/display.png)
 
@@ -13,6 +15,7 @@ npm i vue-org-chart-plugin echarts@5.3.2
 ### Vue 2.x
 
 // main.js
+
 ```javascript
 import Vue from 'vue'
 import App from './App.vue'
@@ -20,45 +23,40 @@ import orgChart from 'vue-org-chart-plugin'
 
 Vue.use(orgChart)
 
-Vue.config.productionTip = false
-
 new Vue({
   render: h => h(App),
 }).$mount('#app')
 ```
 
 // Foo.vue
+
 ```html
 <v-org-chart :options='orgChartOptions'></v-org-chart>
 
 <script>
 export default {
-  name: "App",
-
   data() {
     return {
       orgChartOptions: {
+        // 在 tooltip 中显示的内容
         tooltip: {
-
-          // 节点的值，在 tooltip 中显示。
-          value: {
+          value: { 
             Position: 'mock',
             Email: 'mock@mock.com'
           },
         },
 
+        // 头像
         avatar: {
-
-          // 头像
           value: 'http://127.0.0.1:8080/assets/avatar/avatar001.png',
         },
 
+        // 文本
         text: {
-
-          // 文本
           value: 'Tayler',
         },
 
+        // 子节点
         children: [
           {
             avatar: {
@@ -81,6 +79,7 @@ export default {
 ### Vue 3.x
 
 // main.js
+
 ```javascript
 import { createApp, h } from 'vue'
 import App from './App.vue'
@@ -90,7 +89,9 @@ const app = createApp(App)
 app.use(orgChart, app, h)
 app.mount('#app')
 ```
+
 // Foo.vue
+
 ```html
 <v-org-chart :options='orgChartOptions'></v-org-chart>
 
@@ -115,6 +116,7 @@ orgChartOptions: {
     tooltip: {
       // ...
     },
+
     series: [
       {
         // ...
@@ -128,7 +130,6 @@ orgChartOptions: {
 
 ```javascript
 tooltip: {
-      
   // 是否显示提示框
   show: true, // false
 
@@ -170,7 +171,6 @@ tooltip: {
 
   // 提示框浮层的文本样式。
   textStyle: {
-
     // 文本显示宽度。
     width: '100%', // 100% 200
 
@@ -199,7 +199,6 @@ tooltip: {
 ```javascript
 series: [
   {
-    
     // 树图中正交布局的方向，也就是说只有在 layout = 'orthogonal' 的时候，该配置项才生效。
     orient: 'TB', // BT LR RL
 
@@ -219,7 +218,6 @@ series: [
 
     // 定义树图边的样式。
     lineStyle: {
-
       // 树图边的颜色。
       color: '#ccc',
 
@@ -236,11 +234,13 @@ series: [
 orgChartOptions: {
   tooltip: {
     value: {}, // 或者字符串
+
     style: {
       // ...
       textStyle: { /* ... */ }
 		}
   },
+
   avatar: {
     value: '',
     style: {}
@@ -257,8 +257,8 @@ orgChartOptions: {
 ```javascript
 tooltip: {
 	value: {},
+
 	style: {
-	
 		// 参考全局配置项中的tooltip
     backgroundColor: mock,
 
@@ -291,12 +291,10 @@ tooltip: {
 
 ```javascript
 avatar: {
-
 	// 头像图片地址，当值为 null / undefined 时，会用背景色占位。
 	value: mock,
     
 	style: {
-	
 		// 头像高度
 		height: 60,
 
@@ -313,12 +311,10 @@ avatar: {
 
 ```javascript
 text: {
-  
   // 头像下方文本内容
 	value: mock,
     
   style: {
-    
 		// 文字字体的颜色。
     color: '#333',
 
@@ -333,4 +329,3 @@ text: {
   }
 }
 ```
-
